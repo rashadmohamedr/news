@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
@@ -29,4 +30,23 @@ class UsersManagersTests(TestCase):
         self.assertTrue(user.is_staff)
         self.assertTrue(user.is_superuser)
     
+class SignupPageTests(TestCase):
+    def test_url_exists_at_correct_location_signupview(self):
+        pass
+    def test_signup_view_name(self):
+        pass
+    def test_signup_form(self):
+        response = self.client.post(
+            reverse("signup"),
+            {
+                "username":"testuser",
+                "email":"testuser@email.com",
+                "password1":"testpass123",
+                "password2":"testpass123"
+            }
+        )
+        self.assertEqual(response.status_code,302)
+        self.assertEqual(get_user_model().objects.all().count(),1)
+        self.assertEqual(get_user_model().objects.all()[0].username,"testuser")
+        self.assertEqual(get_user_model().objects.all()[0].email,"testuser@email.com")
         
